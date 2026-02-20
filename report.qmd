@@ -3,6 +3,7 @@ title: "Image Report"
 format:
   html:
     self-contained: true
+    theme: cosmo
 execute:
   echo: false
 ---
@@ -11,8 +12,22 @@ execute:
 
 img_files <- list.files("images", pattern = "\\.png$", full.names = TRUE)
 
+cat("::: {.panel-tabset}\n\n")
+
+# Overview tab with all images in a grid
+cat("## Overview\n\n")
+cat("::: {layout-ncol=2}\n\n")
 for (img in img_files) {
-  cat(sprintf("## %s\n\n", basename(img)))
-  cat(sprintf("![%s](%s)\n\n", basename(img), img))
+  cat(sprintf("![%s](%s)\n\n", tools::file_path_sans_ext(basename(img)), img))
 }
+cat(":::\n\n")
+
+# Individual tabs
+for (img in img_files) {
+  tab_name <- tools::file_path_sans_ext(basename(img))
+  cat(sprintf("## %s\n\n", tab_name))
+  cat(sprintf("![%s](%s){width=100%%}\n\n", tab_name, img))
+}
+
+cat(":::\n")
 ```
