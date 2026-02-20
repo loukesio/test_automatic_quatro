@@ -1,0 +1,18 @@
+---
+title: "Image Report"
+format:
+  html:
+    self-contained: true
+execute:
+  echo: false
+---
+```{r}
+#| results: asis
+
+img_files <- list.files("images", pattern = "\\.png$", full.names = TRUE)
+
+for (img in img_files) {
+  cat(sprintf("## %s\n\n", basename(img)))
+  cat(sprintf("![%s](%s)\n\n", basename(img), img))
+}
+```
